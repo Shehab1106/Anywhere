@@ -27,12 +27,17 @@ const Dashboard = () => {
   const formatDate = (dateString) => {
     const date = new Date(dateString);
     const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, '0'); // Ensure 2-digit month
-    const day = String(date.getDate()).padStart(2, '0'); // Ensure 2-digit day
-    const hours = String(date.getHours()).padStart(2, '0'); // Ensure 2-digit hours
-    const minutes = String(date.getMinutes()).padStart(2, '0'); // Ensure 2-digit minutes
-
-    return `Date:${day}/${month}/${year} - Time:${hours}:${minutes}`;
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0'); 
+    let hours = String(date.getHours()).padStart(2, '0'); 
+    const minutes = String(date.getMinutes()).padStart(2, '0'); 
+    let h = date.getHours();
+    if(h===24){
+      hours='00';
+      h=0;
+    }
+    const hourconfig = h>11? 'PM': 'AM';
+    return `Date:${day}/${month}/${year} - Time:${hours}:${minutes} ${hourconfig}`;
   };
 
   return (
@@ -66,7 +71,7 @@ const Dashboard = () => {
                 <ListItem key={quiz.id}>
                   <ListItemText
                     primary={`${quiz.title}`}
-                    secondary={`Course: ${quiz.course} | Due: ${formatDate(quiz.due)}`} // Format the due date
+                    secondary={`Course: ${quiz.course} | Due: ${formatDate(quiz.due)}`}
                   />
                 </ListItem>
               ))}
